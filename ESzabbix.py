@@ -26,8 +26,8 @@ def use_cache(file):
        return True
     else:
        return False
-    
-    
+
+
 searchkeys = ['query_total', 'fetch_time_in_millis', 'fetch_total', 'fetch_time', 'query_current', 'fetch_current', 'query_time_in_millis']
 getkeys = ['missing_total', 'exists_total', 'current', 'time_in_millis', 'missing_time_in_millis', 'exists_time_in_millis', 'total']
 docskeys = ['count', 'deleted']
@@ -35,7 +35,7 @@ indexingkeys = ['delete_time_in_millis', 'index_total', 'index_current', 'delete
 storekeys = ['size_in_bytes', 'throttle_time_in_millis']
 cachekeys = ['filter_size_in_bytes', 'field_size_in_bytes', 'field_evictions']
 clusterkeys_direct = docskeys + storekeys
-clusterkeys_indirect = searchkeys + getkeys + indexingkeys 
+clusterkeys_indirect = searchkeys + getkeys + indexingkeys
 returnval = None
 conn = None
 user=str(os.getuid())
@@ -50,10 +50,11 @@ lock_file="/tmp/ESzabbix.lock." + user
 while os.access(lock_file,os.F_OK):
 #    logging.write("Waiting a second ...\n")
     time.sleep(1)
+    os.remove(lock_file)
 
 # __main__
 
-# We need to have two command-line args: 
+# We need to have two command-line args:
 # sys.argv[1]: The node name or "cluster"
 # sys.argv[2]: The "key" (status, filter_size_in_bytes, etc)
 
@@ -214,7 +215,7 @@ else: # Not clusterwide, check the next arg
 # logging.write(str(now)+": Finalizando ("+str(returnval)+")\n")
 # logging.close()
 
-# If we somehow did not get a value here, that's a problem.  Send back the standard 
+# If we somehow did not get a value here, that's a problem.  Send back the standard
 # ZBX_NOTSUPPORTED
 if returnval is None:
     zbx_fail()
