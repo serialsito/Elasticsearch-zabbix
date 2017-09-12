@@ -1,0 +1,28 @@
+version: '3'
+services:
+  zabbix-server:
+    image: 'zabbix/zabbix-server-pgsql'
+    ports:
+      - "80:80"
+      - "10051:10051"
+    environment:
+      - DB_SERVER_HOST=postgresql
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/postgres:/data/postgres
+  elastic:
+    build: "."
