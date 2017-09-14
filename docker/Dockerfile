@@ -12,8 +12,9 @@ RUN apt-get install -y git
 RUN apt-get install -y python-pip
 
 RUN apt-get update && apt-get install -y supervisor
-RUN mkdir -p /var/log/supervisord
-ADD ./config/supervisord.conf /etc/supervisord.conf
+RUN mkdir -p /var/log/supervisor
+ADD ./config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
+ADD ./config/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
 CMD ["/usr/bin/supervisord"]
 
 
