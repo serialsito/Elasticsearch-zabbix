@@ -26,3 +26,5 @@ services:
       - ./database/postgres:/data/postgres
   elastic:
     build: "."
+    volumes:
+      - ./:/opt/elasticsearch-zabbix/
