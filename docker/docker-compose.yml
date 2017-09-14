@@ -28,3 +28,5 @@ services:
     build: "."
     volumes:
       - ./:/opt/elasticsearch-zabbix/
+    depends_on:
+      - zabbix-server
