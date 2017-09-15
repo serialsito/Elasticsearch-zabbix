@@ -13,6 +13,8 @@ services:
 
     depends_on:
       - postgresql
+    links:
+      - postgresql
 
   postgresql:
     image: 'postgres:latest'
@@ -24,13 +26,16 @@ services:
       - "5432:5432"
     volumes:
       - ./database/postgres:/data/postgres
+
   elastic:
     build: "."
     volumes:
       - ./:/opt/elasticsearch-zabbix/
-      - ./docker/config/zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
-      - ./docker/config/elasticsearch.conf:/etc/supervisor/conf.d/elasticsearch.conf
-      - ./docker/config/zabbix-agent.conf:/etc/supervisor/conf.d/zabbix-agent.conf
+      - ./docker/config/zabbix/zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
+      - ./docker/config/supervisor/elasticsearch.conf:/etc/supervisor/conf.d/elasticsearch.conf
+      - ./docker/config/supervisor/zabbix-agent.conf:/etc/supervisor/conf.d/zabbix-agent.conf
 
     depends_on:
+      - zabbix-server
+    links:
       - zabbix-server

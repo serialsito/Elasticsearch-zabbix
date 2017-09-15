@@ -18,7 +18,7 @@ RUN echo debconf shared/accepted-oracle-license-v1-1 select true |  debconf-set-
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
 RUN apt-get update
 RUN wget http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-i586.tar.gz
-RUN mkdir /var/cache/oracle-jdk8-installer
+RUN mkdir -p /var/cache/oracle-jdk8-installer
 RUN mv jdk-8u144-linux-i586.tar.gz /var/cache/oracle-jdk8-installer/jdk-8u144-linux-i586.tar.gz
 RUN apt-get install -y oracle-java8-installer
 RUN java -version
@@ -41,9 +41,10 @@ RUN cd /opt/ \
   &&  pip install pyes elasticsearch
 
 RUN apt-get install -y supervisor
-RUN mkdir -p /var/log/supervisor
+RUN mkdir -p -m 0777 /var/log/supervisor
+RUN mkdir -p -m 0777 /var/run/zabbix
 
-ADD ./docker/config/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
-ADD ./docker/config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
-ADD ./docker/config/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
+ADD ./docker/config/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
+ADD ./docker/config/supervisor/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
+ADD ./docker/config/supervisor/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
 CMD ["supervisord", "-n","-c", "/etc/supervisor/supervisord.conf"]
