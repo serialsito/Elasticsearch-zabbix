@@ -28,5 +28,9 @@ services:
     build: "."
     volumes:
       - ./:/opt/elasticsearch-zabbix/
+      - ./docker/config/zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
+      - ./docker/config/elasticsearch.conf:/etc/supervisor/conf.d/elasticsearch.conf
+      - ./docker/config/zabbix-agent.conf:/etc/supervisor/conf.d/zabbix-agent.conf
+
     depends_on:
       - zabbix-server

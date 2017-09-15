@@ -33,7 +33,6 @@ RUN apt-get install -y zabbix-agent
 
 
 ADD ./ /opt/elasticsearch-zabbix/
-ADD ./config/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
 RUN cd /opt/ \
   &&  ls -la /opt/elasticsearch-zabbix/ \
   &&  cp -fv /opt/elasticsearch-zabbix/ESzabbix.userparm /etc/zabbix/zabbix_agentd.d/elasticsearch.conf \
@@ -41,7 +40,7 @@ RUN cd /opt/ \
   &&  chown -v -R zabbix:zabbix /opt/elasticsearch-zabbix \
   &&  pip install pyes elasticsearch
 
-RUN apt-get update && apt-get install -y supervisor
+RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
 
 ADD ./config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
@@ -57,3 +56,8 @@ CMD ["/usr/bin/supervisord"]
 RUN supervisord -с /etc/supervisor/supervisord.conf
 #RUN cat /var/log/supervisor/supervisord.log
 #RUN cat /var/log/supervisor/elastic-out.log
+
+ADD ./docker/config/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
+ADD ./docker/config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
+ADD ./docker/config/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
+CMD ["supervisord", "-n","-c", "/etc/supervisor/supervisord.conf"]
