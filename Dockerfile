@@ -43,8 +43,8 @@ RUN cd /opt/ \
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
 
-ADD ./config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
-ADD ./config/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
+ADD ./docker/config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
+ADD ./docker/config/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
 
 RUN mkdir /usr/share/elasticsearch/config \
     && ln /etc/elasticsearch/logging.yml /usr/share/elasticsearch/config/ \
@@ -52,10 +52,6 @@ RUN mkdir /usr/share/elasticsearch/config \
     && chmod 774 /usr/share/elasticsearch/config
 
 #RUN /usr/share/elasticsearch/bin/elasticsearch -Des.insecure.allow.root=true
-CMD ["/usr/bin/supervisord"]
-RUN supervisord -с /etc/supervisor/supervisord.conf
-#RUN cat /var/log/supervisor/supervisord.log
-#RUN cat /var/log/supervisor/elastic-out.log
 
 ADD ./docker/config/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
 ADD ./docker/config/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
