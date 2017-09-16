@@ -15,6 +15,7 @@ services:
       - postgresql
     links:
       - postgresql
+      - elastic
 
   postgresql:
     image: 'postgres:latest'
