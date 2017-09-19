@@ -30,6 +30,7 @@ services:
     links:
       - postgresql
       - zabbix-server
+      - elastic
 
   postgresql:
     image: 'postgres:latest'
