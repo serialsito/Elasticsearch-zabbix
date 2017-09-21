@@ -7,49 +7,54 @@
 from elasticsearch import Elasticsearch
 
 import sys
-import json
+import logging
 import shelve
 import os
 import time
+
 
 # Define the fail message
 def zbx_fail():
     print "ZBX_NOTSUPPORTED"
     sys.exit(2)
 
-def use_cache(file):
-    if not os.access(file,os.F_OK):
+
+def use_cache(file_name):
+    if not os.access(file_name, os.F_OK):
         return False
     now = int(time.time())
-    file_modified = int(os.stat(file).st_mtime)
+    file_modified = int(os.stat(file_name).st_mtime)
     if now - file_modified < 60:
-       return True
+        return True
     else:
-       return False
+        return False
 
 
-searchkeys = ['query_total', 'fetch_time_in_millis', 'fetch_total', 'fetch_time', 'query_current', 'fetch_current', 'query_time_in_millis']
-getkeys = ['missing_total', 'exists_total', 'current', 'time_in_millis', 'missing_time_in_millis', 'exists_time_in_millis', 'total']
+searchkeys = ['query_total', 'fetch_time_in_millis', 'fetch_total', 'fetch_time', 'query_current', 'fetch_current',
+              'query_time_in_millis']
+getkeys = ['missing_total', 'exists_total', 'current', 'time_in_millis', 'missing_time_in_millis',
+           'exists_time_in_millis', 'total']
 docskeys = ['count', 'deleted']
-indexingkeys = ['delete_time_in_millis', 'index_total', 'index_current', 'delete_total', 'index_time_in_millis', 'delete_current']
+indexingkeys = ['delete_time_in_millis', 'index_total', 'index_current', 'delete_total', 'index_time_in_millis',
+                'delete_current']
 storekeys = ['size_in_bytes', 'throttle_time_in_millis']
 cachekeys = ['filter_size_in_bytes', 'field_size_in_bytes', 'field_evictions']
 clusterkeys_direct = docskeys + storekeys
 clusterkeys_indirect = searchkeys + getkeys + indexingkeys
 returnval = None
 conn = None
-user=str(os.getuid())
+user = str(os.getuid())
 clustercache_file = "/tmp/clusterstats.cache." + user
 nodescache_file = "/tmp/nodestats.cache." + user
-lock_file="/tmp/ESzabbix.lock." + user
+lock_file = "/tmp/ESzabbix.lock." + user
 
 # now = time.time()
 # logging = open("/tmp/whathappens.log."+str(now)+"-"+sys.argv[1]+"-"+sys.argv[2], "w");
 # logging.write(" ".join(sys.argv)+"\n")
 # Waiting to somebody write the cache
-while os.access(lock_file,os.F_OK):
-#    logging.write("Waiting a second ...\n")
-    time.sleep(1)
+while os.access(lock_file, os.F_OK):
+    logging.critical("Waiting a second ...\n")
+    time.sleep(3)
     os.remove(lock_file)
 
 # __main__
@@ -69,18 +74,18 @@ except Exception, e:
 
 if sys.argv[1] == 'cluster' and sys.argv[2] in clusterkeys_direct:
     nodestats = None
-#    now=time.strftime("%Y%m%d-%H:%M:%S")
+    #    now=time.strftime("%Y%m%d-%H:%M:%S")
     if use_cache(clustercache_file):
-#	logging.write(str(now) + ": Using cluster cache\n")
+        #	logging.write(str(now) + ": Using cluster cache\n")
         nodestats = shelve.open(clustercache_file)
         nodestats = nodestats['stats']
     else:
-#	logging.write(str(now) + ": Generate lockfile and cluster cache\n")
-        lock=open (lock_file, "w")
+        #	logging.write(str(now) + ": Generate lockfile and cluster cache\n")
+        lock = open(lock_file, "w")
         try:
             nodestats = conn.cluster.stats()
             shelf = shelve.open(clustercache_file)
-            shelf['stats']=nodestats
+            shelf['stats'] = nodestats
             shelf.close()
             lock.close()
         except Exception, e:
@@ -93,20 +98,20 @@ if sys.argv[1] == 'cluster' and sys.argv[2] in clusterkeys_direct:
         returnval = nodestats['indices']['docs'][sys.argv[2]]
     elif sys.argv[2] in storekeys:
         returnval = nodestats['indices']['store'][sys.argv[2]]
-elif sys.argv[1] == 'cluster' and  sys.argv[2] in clusterkeys_indirect:
+elif sys.argv[1] == 'cluster' and sys.argv[2] in clusterkeys_indirect:
     nodestats = None
-#    now=time.strftime("%Y%m%d-%H:%M:%S")
+    #    now=time.strftime("%Y%m%d-%H:%M:%S")
     if use_cache(nodescache_file):
-#	logging.write(str(now)+": Using node cache\n")
+        #	logging.write(str(now)+": Using node cache\n")
         nodestats = shelve.open(nodescache_file)
         nodestats = nodestats['stats']
     else:
-#	logging.write(str(now)+": Generate lockfile and node cache\n")
-        lock=open (lock_file, "w")
+        #	logging.write(str(now)+": Generate lockfile and node cache\n")
+        lock = open(lock_file, "w")
         try:
             nodestats = conn.nodes.stats()
             shelf = shelve.open(nodescache_file)
-            shelf['stats']=nodestats
+            shelf['stats'] = nodestats
             shelf.close()
             lock.close()
         except Exception, e:
@@ -116,21 +121,21 @@ elif sys.argv[1] == 'cluster' and  sys.argv[2] in clusterkeys_indirect:
         if os.access(lock_file, os.F_OK):
             os.remove(lock_file)
         else:
-            pass # something is wrong if this is executed ...
+            pass  # something is wrong if this is executed ...
     subtotal = 0
     for nodename in conn.nodes.info()['nodes'].keys():
         try:
-    	    if sys.argv[2] in indexingkeys:
-    		    indexstats = nodestats['nodes'][nodename]['indices']['indexing']
-    	    elif sys.argv[2] in getkeys:
-    		    indexstats = nodestats['nodes'][nodename]['indices']['get']
-    	    elif sys.argv[2] in searchkeys:
-    		    indexstats = nodestats['nodes'][nodename]['indices']['search']
+            if sys.argv[2] in indexingkeys:
+                indexstats = nodestats['nodes'][nodename]['indices']['indexing']
+            elif sys.argv[2] in getkeys:
+                indexstats = nodestats['nodes'][nodename]['indices']['get']
+            elif sys.argv[2] in searchkeys:
+                indexstats = nodestats['nodes'][nodename]['indices']['search']
         except Exception, e:
             pass
         try:
-    	    if sys.argv[2] in indexstats:
-    		    subtotal += indexstats[sys.argv[2]]
+            if sys.argv[2] in indexstats:
+                subtotal += indexstats[sys.argv[2]]
         except Exception, e:
             pass
     returnval = subtotal
@@ -171,20 +176,20 @@ elif sys.argv[1] == 'service':
         else:
             returnval = 0
 
-else: # Not clusterwide, check the next arg
+else:  # Not clusterwide, check the next arg
     nodestats = None
-#    now=time.strftime("%Y%m%d-%H:%M:%S")
+    #    now=time.strftime("%Y%m%d-%H:%M:%S")
     if use_cache(nodescache_file):
-#	logging.write(str(now)+": Usando cache nodos\n")
+        #	logging.write(str(now)+": Usando cache nodos\n")
         nodestats = shelve.open(nodescache_file)
         nodestats = nodestats['stats']
     else:
-#	logging.write(str(now)+": Creando lockfile y cache nodo\n")
-        lock=open (lock_file, "w")
+        #	logging.write(str(now)+": Creando lockfile y cache nodo\n")
+        lock = open(lock_file, "w")
         try:
             nodestats = conn.nodes.stats()
             shelf = shelve.open(nodescache_file)
-            shelf['stats']=nodestats
+            shelf['stats'] = nodestats
             shelf.close()
             lock.close()
         except Exception, e:
