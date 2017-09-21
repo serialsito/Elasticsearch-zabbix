@@ -23,14 +23,14 @@ RUN mv jdk-8u144-linux-i586.tar.gz /var/cache/oracle-jdk8-installer/jdk-8u144-li
 RUN apt-get install -y oracle-java8-installer
 RUN java -version
 
-RUN apt-get install -y git
-RUN apt-get install -y python-pip
 
 RUN wget -qO - http://repo.zabbix.com/zabbix-official-repo.key | apt-key add
 RUN apt-add-repository "deb http://repo.zabbix.com/zabbix/3.2/ubuntu/ xenial main"
 RUN apt-get update
 RUN apt-get install -y zabbix-agent
 
+RUN apt-get install -y git
+RUN apt-get install -y python-pip
 
 ADD ./ /opt/elasticsearch-zabbix/
 RUN cd /opt/ \
