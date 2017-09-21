@@ -4,7 +4,7 @@ import json
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'discovery':
+    if sys.argv[1] == 'elasticsearch.discovery':
         r = requests.get('http://localhost:9200/_cat/indices?v')
         strings = r.text.strip().split('\n')
         res_data = {'data': []}
