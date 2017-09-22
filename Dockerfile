@@ -44,14 +44,17 @@ RUN cd /opt/ \
 
 
 RUN apt-get install -y nginx
-RUN mkdir -p /etc/nginx
+RUN mkdir -p -m 0777 /etc/nginx
 
 
 RUN apt-get install -y supervisor
 RUN mkdir -p -m 0777 /var/log/supervisor
 RUN mkdir -p -m 0777 /var/run/zabbix
+
+
 ADD ./docker/config/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
 ADD ./docker/config/nginx/elastic.conf /etc/nginx/conf.d/elastic.conf
+ADD ./docker/config/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./docker/config/supervisor/elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
 ADD ./docker/config/supervisor/zabbix-agent.conf /etc/supervisor/conf.d/zabbix-agent.conf
 ADD ./docker/config/supervisor/nginx.conf /etc/supervisor/conf.d/nginx.conf
