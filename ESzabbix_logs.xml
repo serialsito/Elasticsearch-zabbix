@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-09-22T15:22:30Z</date>
+    <date>2017-09-25T13:53:15Z</date>
     <groups>
         <group>
             <name>Linux servers</name>
@@ -650,7 +650,168 @@
                             <application_prototypes/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes/>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},index,count].last()} &gt; {$INDEX_COUNT}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},index,count] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},index,errors].last()} &gt; {$INDEX_ERRORS}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},index,errors] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},index,percentile_50].last()} &gt; {$INDEX_PERC_50}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},index,percentile_50] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},index,percentile_75].last()} &gt; {$INDEX_PERC_75}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},index,percentile_75] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},index,percentile_90].last()} &gt; {$INDEX_PERC_90}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},index,percentile_90] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},refresh,count].last()} &gt; {$REFRESH_COUNT}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},refresh,count] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},refresh,errors].last()} &gt; {$REFRESH_ERRORS}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},refresh,erros] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},refresh,percentile_50].last()} &gt; {$REFRESH_PERC_50}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},refresh,percentile_50] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},refresh,percentile_75].last()} &gt; {$REFRESH_PERC_75}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},refresh,percentile_75] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Elasticsearch Logs:ESZabbix_logs[{#ES_INDEX},refresh,percentile_90].last()} &gt; {$REFRESH_PERC_90}</expression>
+                            <recovery_mode>0</recovery_mode>
+                            <recovery_expression/>
+                            <name>Elasticsearch Logs 	ESZabbix_logs[{#ES_INDEX},refresh,percentile_90] &gt; $1</name>
+                            <correlation_mode>0</correlation_mode>
+                            <correlation_tag/>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                            <manual_close>0</manual_close>
+                            <dependencies/>
+                            <tags/>
+                        </trigger_prototype>
+                    </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
@@ -661,4 +822,86 @@
             <screens/>
         </template>
     </templates>
+    <triggers>
+        <trigger>
+            <expression>{Elasticsearch Logs:ESZabbix_logs[bulk,count].last()} &gt; {$BULK_COUNT}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Elasticsearch Logs ESZabbix_logs[bulk,count] &gt; {$BULK_COUNT}</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Elasticsearch Logs:ESZabbix_logs[bulk,errors].last()} &gt; {$BULK_ERRORS}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Elasticsearch Logs ESZabbix_logs[bulk,errors] &gt; $1</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Elasticsearch Logs:ESZabbix_logs[bulk,percentile_50].last()} &gt; {$BULK_PERC_50}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Elasticsearch Logs ESZabbix_logs[bulk,percentile_50] &gt; $1</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Elasticsearch Logs:ESZabbix_logs[bulk,percentile_75].last()} &gt; {$BULK_PERC_75}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Elasticsearch Logs ESZabbix_logs[bulk,percentile_75] &gt; $1</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+        <trigger>
+            <expression>{Elasticsearch Logs:ESZabbix_logs[bulk,percentile_90].last()} &gt; {$BULK_PERC_90}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>Elasticsearch Logs ESZabbix_logs[bulk,percentile_90] &gt; $1</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <manual_close>0</manual_close>
+            <dependencies/>
+            <tags/>
+        </trigger>
+    </triggers>
 </zabbix_export>
