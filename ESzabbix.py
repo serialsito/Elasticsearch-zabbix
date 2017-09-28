@@ -52,10 +52,12 @@ lock_file = "/tmp/ESzabbix.lock." + user
 # logging = open("/tmp/whathappens.log."+str(now)+"-"+sys.argv[1]+"-"+sys.argv[2], "w");
 # logging.write(" ".join(sys.argv)+"\n")
 # Waiting to somebody write the cache
+i=0.0
 while os.access(lock_file, os.F_OK):
-    logging.critical("Waiting a second ...\n")
-    time.sleep(3)
-    os.remove(lock_file)
+    time.sleep(0.1)
+    i += 0.1
+    if i>=1.0:
+        os.remove(lock_file)
 
 # __main__
 
