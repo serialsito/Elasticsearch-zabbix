@@ -15,7 +15,6 @@ if sys.version_info[0] == 3:
 else:
     from cStringIO import StringIO
 
-LOG_FILE = '{}/nginx.log'.format(os.path.dirname(os.path.abspath(__file__)))
 TMP_FILE = '{}/es.position'.format(os.path.dirname(os.path.abspath(__file__)))
 ZABBIX_SERVER = 'zabbix-server'
 ZABBIX_AGENT_CONFIG = '/etc/zabbix/zabbix_agentd.conf'
@@ -274,13 +273,13 @@ class LogParser:
             f.write('{}\n{}\n'.format(str(pos), line))
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if sys.argv[1] == 'elasticsearch.discovery':
-            r = requests.get('http://localhost:9200/_cat/indices?v')
-            strings = r.text.strip().split('\n')
-            res_data = {'data': []}
-            for string in strings[1:]:
-                res_data['data'].append({'{#ES_INDEX}': '{}'.format(string.split()[2])})
-            print(json.dumps(res_data))
+    if sys.argv[1] == 'elasticsearch.discovery':
+        r = requests.get('http://localhost:9200/_cat/indices?v')
+        strings = r.text.strip().split('\n')
+        res_data = {'data': []}
+        for string in strings[1:]:
+            res_data['data'].append({'{#ES_INDEX}': '{}'.format(string.split()[2])})
+        print(json.dumps(res_data))
     else:
-        LogParser(LOG_FILE, TMP_FILE)
+        log_file = sys.argv[1]
+        LogParser(log_file, TMP_FILE)
