@@ -1,24 +1,34 @@
 import os
+import sys
 from pyzabbix import ZabbixAPI, ZabbixAPIException, ZabbixSender, ZabbixMetric
 from datetime import datetime, timedelta
 from time import mktime, time
 import ltsv
-from io import StringIO
 import re
 import numpy as np
 from collections import defaultdict
 
+if sys.version_info[0] == 3:
+    from io import StringIO
+else:
+    from cStringIO import StringIO
 
 LOG_FILE = '{}/nginx.log'.format(os.path.dirname(os.path.abspath(__file__)))
 TMP_FILE = '{}/es.position'.format(os.path.dirname(os.path.abspath(__file__)))
-ZABBIX_SERVER = '127.0.0.1'
+ZABBIX_SERVER = 'zabbix-server'
+ZABBIX_AGENT_CONFIG = '/etc/zabbix/zabbix_agentd.conf'
 
 
 class LogParser:
+    """
+    working with log and position files
+    collects the statistic by minutes and sends it to zabbix server
+    using
+    """
     def __init__(self, filename, pos_file):
         self.log_file = filename
         self.pos_file = pos_file
-        self.host = 'host'
+        self.host = 'elastic'
         self.elastic_metric = defaultdict(
             lambda: {
                 'index': {'count': 0, 'errors': 0, 'req_times': [], 'up_times': []},
@@ -40,7 +50,10 @@ class LogParser:
         if not os.path.isfile(self.pos_file):
             return 0, ''
         with open(self.pos_file) as f:
-            pos = int(f.readline().strip())
+            try:
+                pos = int(f.readline().strip())
+            except ValueError:
+                pos = 0
             line = f.readline().strip()
             return pos, line
 
@@ -158,7 +171,7 @@ class LogParser:
                     clock=timestamp
                 ))
         self.elastic_metric.clear()
-        print(ZabbixSender(ZABBIX_SERVER).send(packet))
+        print(ZabbixSender(zabbix_server=ZABBIX_SERVER, use_config=True).send(packet))
 
     def read_nginx_log(self, start_pos, last_line):
         """
