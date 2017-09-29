@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-09-25T13:53:15Z</date>
+    <date>2017-09-29T18:35:44Z</date>
     <groups>
         <group>
             <name>Linux servers</name>
@@ -21,7 +21,7 @@
             <items>
                 <item>
                     <name>ESZabbix_logs bulk count</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
@@ -60,7 +60,7 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk errors</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
@@ -99,7 +99,7 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk percentile_50</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
@@ -108,7 +108,7 @@
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
-                    <value_type>3</value_type>
+                    <value_type>0</value_type>
                     <allowed_hosts/>
                     <units/>
                     <delta>0</delta>
@@ -138,7 +138,7 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk percentile_75</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
@@ -147,7 +147,7 @@
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
-                    <value_type>3</value_type>
+                    <value_type>0</value_type>
                     <allowed_hosts/>
                     <units/>
                     <delta>0</delta>
@@ -177,7 +177,7 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk percentile_90</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
@@ -186,7 +186,7 @@
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
-                    <value_type>3</value_type>
+                    <value_type>0</value_type>
                     <allowed_hosts/>
                     <units/>
                     <delta>0</delta>
@@ -221,7 +221,7 @@
                     <type>0</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>ESzabbixlogs</key>
+                    <key>ESzabbix_discovery</key>
                     <delay>30</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -244,14 +244,21 @@
                     <filter>
                         <evaltype>0</evaltype>
                         <formula/>
-                        <conditions/>
+                        <conditions>
+                            <condition>
+                                <macro>{#ESINDEX}</macro>
+                                <value/>
+                                <operator>8</operator>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
                     </filter>
                     <lifetime>30</lifetime>
                     <description/>
                     <item_prototypes>
                         <item_prototype>
                             <name>ESZabbix_logs index count</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -291,7 +298,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index errors</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -331,7 +338,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index percentile_50</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -340,7 +347,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -371,7 +378,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index percentile_75</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -380,7 +387,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -411,7 +418,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index percentile_90</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -420,7 +427,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -451,7 +458,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh count</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -491,7 +498,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh errors</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -500,7 +507,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -531,7 +538,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh percentile_50</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -540,7 +547,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -571,7 +578,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh percentile_75</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -580,7 +587,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>
@@ -611,7 +618,7 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh percentile_90</name>
-                            <type>0</type>
+                            <type>7</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
@@ -620,7 +627,7 @@
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
-                            <value_type>3</value_type>
+                            <value_type>0</value_type>
                             <allowed_hosts/>
                             <units/>
                             <delta>0</delta>

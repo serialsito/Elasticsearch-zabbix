@@ -1,12 +1,14 @@
 import os
-import sys
-from pyzabbix import ZabbixAPI, ZabbixAPIException, ZabbixSender, ZabbixMetric
-from datetime import datetime, timedelta
-from time import mktime, time
-import ltsv
 import re
+import sys
+import json
+import ltsv
+import requests
 import numpy as np
+from time import mktime, time
 from collections import defaultdict
+from datetime import datetime, timedelta
+from pyzabbix import ZabbixAPI, ZabbixAPIException, ZabbixSender, ZabbixMetric
 
 if sys.version_info[0] == 3:
     from io import StringIO
@@ -63,9 +65,8 @@ class LogParser:
     def send_data(self, timestamp):
         packet = []
         key_template = 'ESZabbix_logs'
-        for url, data in self.elastic_metric.items():
-            index = url.split('/')[1]
-            if url == '_bulk':
+        for index, data in self.elastic_metric.items():
+            if index == 'bulk':
                 not_empty = True if len(data['index']['req_times']) > 0 else False
                 perc_50 = self.calc_percentile(data['index']['req_times'], 50) if not_empty else 0
                 perc_75 = self.calc_percentile(data['index']['req_times'], 75) if not_empty else 0
@@ -112,7 +113,7 @@ class LogParser:
                 ref_perc_90 = self.calc_percentile(data['refresh']['req_times'], 90) if not_empty else 0
                 packet.append(ZabbixMetric(
                     host=self.host,
-                    key='{}[{}, index, count]'.format(key_template, index),
+                    key='{}[{},index,count]'.format(key_template, index),
                     value=data['index']['count'],
                     clock=timestamp
                 ))
@@ -171,7 +172,9 @@ class LogParser:
                     clock=timestamp
                 ))
         self.elastic_metric.clear()
-        print(ZabbixSender(zabbix_server=ZABBIX_SERVER, use_config=True).send(packet))
+        for el in packet:
+            print(el)
+        print(ZabbixSender(zabbix_server=ZABBIX_SERVER).send(packet))
 
     def read_nginx_log(self, start_pos, last_line):
         """
@@ -235,24 +238,29 @@ class LogParser:
                     self.send_data(timestamp)
                     start_time = line_time
                 url = line_params[3][1].split()[1]
-                if re.match('\s\/_bulk', url):
-                    self.elastic_metric['_bulk']['index']['count'] += 1
-                    self.elastic_metric['_bulk']['index']['req_times'].append(float(line_params[8][1]))
-                    self.elastic_metric['_bulk']['index']['up_times'].append(float(line_params[9][1]))
-                else:
-                    self.elastic_metric[url]['index']['count'] += 1
-                    self.elastic_metric[url]['index']['req_times'].append(float(line_params[8][1]))
-                    self.elastic_metric[url]['index']['up_times'].append(float(line_params[9][1]))
+                if re.match('\/_bulk', url):
+                    self.elastic_metric['bulk']['index']['count'] += 1
+                    self.elastic_metric['bulk']['index']['req_times'].append(float(line_params[8][1]))
+                    self.elastic_metric['bulk']['index']['up_times'].append(float(line_params[9][1]))
+                elif re.match('^(\/[^_]{1}\w+[?\/]+)', url):
+                    index = re.findall('^\/([^_]{1}\w+)[\/?]{1}', url)[0]
+                    if not index:
+                        continue
+                    self.elastic_metric[index]['index']['count'] += 1
+                    self.elastic_metric[index]['index']['req_times'].append(float(line_params[8][1]))
+                    self.elastic_metric[index]['index']['up_times'].append(float(line_params[9][1]))
                     if self.is_error_code(line_params[4][1]):
-                        self.elastic_metric[url]['index']['errors'] += 1
-                    if re.match('\s\/\w+\/_refresh', url):
-                        self.elastic_metric[url]['refresh']['count'] += 1
-                        self.elastic_metric[url]['refresh']['req_times'].append(float(line_params[8][1]))
-                        self.elastic_metric[url]['refresh']['up_times'].append(float(line_params[9][1]))
+                        self.elastic_metric[index]['index']['errors'] += 1
+                    if re.match('^(\/[^_]?\w+\/_refresh)', url):
+                        self.elastic_metric[index]['refresh']['count'] += 1
+                        self.elastic_metric[index]['refresh']['req_times'].append(float(line_params[8][1]))
+                        self.elastic_metric[index]['refresh']['up_times'].append(float(line_params[9][1]))
                         if self.is_error_code(line_params[4][1]):
-                            self.elastic_metric[url]['refresh']['errors'] += 1
+                            self.elastic_metric[index]['refresh']['errors'] += 1
                 cur_tell = log_file.tell()
                 line = log_file.readline()
+            timestamp = int(mktime(start_time.timetuple()))
+            self.send_data(timestamp)
             self.write_cur_pos_n_line(last_tell, last_line)
         return last_tell, last_line
 
@@ -266,4 +274,13 @@ class LogParser:
             f.write('{}\n{}\n'.format(str(pos), line))
 
 if __name__ == '__main__':
-    LogParser(LOG_FILE, TMP_FILE)
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'elasticsearch.discovery':
+            r = requests.get('http://localhost:9200/_cat/indices?v')
+            strings = r.text.strip().split('\n')
+            res_data = {'data': []}
+            for string in strings[1:]:
+                res_data['data'].append({'{#ES_INDEX}': '{}'.format(string.split()[2])})
+            print(json.dumps(res_data))
+    else:
+        LogParser(LOG_FILE, TMP_FILE)
