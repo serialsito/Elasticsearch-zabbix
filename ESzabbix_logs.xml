@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-10-02T10:32:39Z</date>
+    <date>2017-10-02T12:22:48Z</date>
     <groups>
         <group>
             <name>Linux servers</name>
@@ -824,7 +824,68 @@
                 </discovery_rule>
             </discovery_rules>
             <httptests/>
-            <macros/>
+            <macros>
+                <macro>
+                    <macro>{$BULK_COUNT}</macro>
+                    <value>5000</value>
+                </macro>
+                <macro>
+                    <macro>{$BULK_ERRORS}</macro>
+                    <value>0</value>
+                </macro>
+                <macro>
+                    <macro>{$BULK_PERC_50}</macro>
+                    <value>0.2</value>
+                </macro>
+                <macro>
+                    <macro>{$BULK_PERC_75}</macro>
+                    <value>0.5</value>
+                </macro>
+                <macro>
+                    <macro>{$BULK_PERC_90}</macro>
+                    <value>1</value>
+                </macro>
+                <macro>
+                    <macro>{$INDEX_COUNT}</macro>
+                    <value>5000</value>
+                </macro>
+                <macro>
+                    <macro>{$INDEX_ERRORS}</macro>
+                    <value>0</value>
+                </macro>
+                <macro>
+                    <macro>{$INDEX_PERC_50}</macro>
+                    <value>0.2</value>
+                </macro>
+                <macro>
+                    <macro>{$INDEX_PERC_75}</macro>
+                    <value>0.5</value>
+                </macro>
+                <macro>
+                    <macro>{$INDEX_PERC_90}</macro>
+                    <value>1</value>
+                </macro>
+                <macro>
+                    <macro>{$REFRESH_COUNT}</macro>
+                    <value>5000</value>
+                </macro>
+                <macro>
+                    <macro>{$REFRESH_ERROR}</macro>
+                    <value>0</value>
+                </macro>
+                <macro>
+                    <macro>{$REFRESH_PERC_50}</macro>
+                    <value>0.2</value>
+                </macro>
+                <macro>
+                    <macro>{$REFRESH_PERC_75}</macro>
+                    <value>0.5</value>
+                </macro>
+                <macro>
+                    <macro>{$REFRESH_PERC_90}</macro>
+                    <value>1</value>
+                </macro>
+            </macros>
             <templates/>
             <screens/>
         </template>
