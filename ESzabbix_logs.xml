@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.2</version>
-    <date>2017-09-29T18:35:44Z</date>
+    <date>2017-10-02T10:32:39Z</date>
     <groups>
         <group>
             <name>Linux servers</name>
@@ -21,12 +21,12 @@
             <items>
                 <item>
                     <name>ESZabbix_logs bulk count</name>
-                    <type>7</type>
+                    <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ESZabbix_logs[bulk,count]</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
@@ -60,12 +60,12 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk errors</name>
-                    <type>7</type>
+                    <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ESZabbix_logs[bulk,errors]</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
@@ -99,12 +99,12 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk percentile_50</name>
-                    <type>7</type>
+                    <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ESZabbix_logs[bulk,percentile_50]</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
@@ -138,12 +138,12 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk percentile_75</name>
-                    <type>7</type>
+                    <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ESZabbix_logs[bulk,percentile_75]</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
@@ -177,12 +177,12 @@
                 </item>
                 <item>
                     <name>ESZabbix_logs bulk percentile_90</name>
-                    <type>7</type>
+                    <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ESZabbix_logs[bulk,percentile_90]</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>90</history>
                     <trends>365</trends>
                     <status>0</status>
@@ -258,12 +258,12 @@
                     <item_prototypes>
                         <item_prototype>
                             <name>ESZabbix_logs index count</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},index,count]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -298,12 +298,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index errors</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},index,errors]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -338,12 +338,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index percentile_50</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},index,percentile_50]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -378,12 +378,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index percentile_75</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},index,percentile_75]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -418,12 +418,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs index percentile_90</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},index,percentile_90]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -458,12 +458,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh count</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},refresh,count]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -498,12 +498,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh errors</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},refresh,errors]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -538,12 +538,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh percentile_50</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},refresh,percentile_50]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -578,12 +578,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh percentile_75</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},refresh,percentile_75]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -618,12 +618,12 @@
                         </item_prototype>
                         <item_prototype>
                             <name>ESZabbix_logs refresh percentile_90</name>
-                            <type>7</type>
+                            <type>2</type>
                             <snmp_community/>
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ESZabbix_logs[{#ES_INDEX},refresh,percentile_90]</key>
-                            <delay>30</delay>
+                            <delay>0</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>

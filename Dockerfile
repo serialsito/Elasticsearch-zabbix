@@ -40,9 +40,8 @@ RUN cd /opt/ \
   &&  cp -fv /opt/elasticsearch-zabbix/ESzabbix_logs.userparm /etc/zabbix/zabbix_agentd.d/elasticsearch_logs.conf \
   &&  sed -i 's/\/opt\/zabbix\/externalscripts/\/opt\/elasticsearch-zabbix/g' /etc/zabbix/zabbix_agentd.d/elasticsearch_logs.conf \
   &&  chown -v -R zabbix:zabbix /opt/elasticsearch-zabbix \
-  &&  pip install pyes elasticsearch
+  &&  pip install -r /opt/elasticsearch-zabbix/requirements.txt
 
-RUN pip install -r /opt/elasticsearch-zabbix/requirements.txt
 RUN apt-get install -y nginx curl
 RUN mkdir -p -m 0777 /etc/nginx
 
