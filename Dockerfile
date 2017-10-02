@@ -42,8 +42,7 @@ RUN cd /opt/ \
   &&  chown -v -R zabbix:zabbix /opt/elasticsearch-zabbix \
   &&  pip install -r /opt/elasticsearch-zabbix/requirements.txt
 
-
-RUN apt-get install -y nginx
+RUN apt-get install -y nginx curl
 RUN mkdir -p -m 0777 /etc/nginx
 
 
