@@ -1,4 +1,4 @@
-pyzabbix
+py-zabbix
 ltsv
 requests
 numpy
