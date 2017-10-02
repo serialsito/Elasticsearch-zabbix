@@ -5,10 +5,10 @@ import json
 import ltsv
 import requests
 import numpy as np
-from time import mktime, time
+from time import mktime
 from collections import defaultdict
 from datetime import datetime, timedelta
-from pyzabbix import ZabbixAPI, ZabbixAPIException, ZabbixSender, ZabbixMetric
+from pyzabbix import ZabbixSender, ZabbixMetric
 
 if sys.version_info[0] == 3:
     from io import StringIO
@@ -16,7 +16,6 @@ else:
     from cStringIO import StringIO
 
 TMP_FILE = '{}/es.position'.format(os.path.dirname(os.path.abspath(__file__)))
-ZABBIX_SERVER = 'zabbix-server'
 ZABBIX_AGENT_CONFIG = '/etc/zabbix/zabbix_agentd.conf'
 
 
@@ -85,19 +84,19 @@ class LogParser:
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[bulk,percentile_50]'.format(key_template),
-                    value=perc_50,
+                    value=str(perc_50),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[bulk,percentile_75]'.format(key_template),
-                    value=perc_75,
+                    value=str(perc_75),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[bulk,percentile_90]'.format(key_template),
-                    value=perc_90,
+                    value=str(perc_90),
                     clock=timestamp
                 ))
             else:
@@ -125,19 +124,19 @@ class LogParser:
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[{},index,percentile_50]'.format(key_template, index),
-                    value=perc_50,
+                    value=str(perc_50),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[{},index,percentile_75]'.format(key_template, index),
-                    value=perc_75,
+                    value=str(perc_75),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[{},index,percentile_90]'.format(key_template, index),
-                    value=perc_90,
+                    value=str(perc_90),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
@@ -155,25 +154,25 @@ class LogParser:
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[{},refresh,percentile_50]'.format(key_template, index),
-                    value=ref_perc_50,
+                    value=str(ref_perc_50),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[{},refresh,percentile_75]'.format(key_template, index),
-                    value=ref_perc_75,
+                    value=str(ref_perc_75),
                     clock=timestamp
                 ))
                 packet.append(ZabbixMetric(
                     host=self.host,
                     key='{}[{},refresh,percentile_90]'.format(key_template, index),
-                    value=ref_perc_90,
+                    value=str(ref_perc_90),
                     clock=timestamp
                 ))
         self.elastic_metric.clear()
         for el in packet:
             print(el)
-        print(ZabbixSender(zabbix_server=ZABBIX_SERVER).send(packet))
+        print(ZabbixSender(use_config=ZABBIX_AGENT_CONFIG).send(packet))
 
     def read_nginx_log(self, start_pos, last_line):
         """

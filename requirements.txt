@@ -1,6 +1,6 @@
 pyes
 elasticsearch
-pyzabbix
+py-zabbix
 ltsv
 requests
 numpy
