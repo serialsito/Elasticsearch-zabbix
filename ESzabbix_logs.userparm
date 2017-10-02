@@ -1,0 +1,1 @@
+UserParameter=ESzabbix_logs[*],python /opt/elasticsearch-zabbix/ESzabbix_logs.py $1

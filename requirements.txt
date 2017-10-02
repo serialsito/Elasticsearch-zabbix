@@ -1,0 +1,6 @@
+pyes
+elasticsearch
+py-zabbix
+ltsv
+requests
+numpy
