@@ -1,0 +1,4 @@
+pyzabbix
+ltsv
+requests
+numpy
