@@ -1,0 +1,58 @@
+version: '3'
+services:
+  zabbix-server:
+    image: 'zabbix/zabbix-server-pgsql:ubuntu-3.2-latest'
+    ports:
+      - "10051:10051"
+    environment:
+      - DB_SERVER_HOST=postgresql
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PHP_TZ=Europe/Moscow
+    depends_on:
+      - postgresql
+    links:
+      - postgresql
+  zabbix-web:
+    image: 'zabbix/zabbix-web-nginx-pgsql:ubuntu-3.2-latest'
+    ports:
+      - "80:80"
+    environment:
+      - DB_SERVER_HOST=postgresql
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - PHP_TZ=Europe/Moscow
+    depends_on:
+      - postgresql
+      - zabbix-server
+    links:
+      - postgresql
+      - zabbix-server
+      - elastic
+
+  postgresql:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/database/postgres:/data/postgres
+      - ./docker/database/postgres/pg_hba.conf:/usr/share/postgresql/9.6/pg_hba.conf.sample
+
+  elastic:
+    build: "."
+    volumes:
+      - ./:/opt/elasticsearch-zabbix/
+      - ./docker/config/zabbix/zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
+      - ./docker/config/supervisor/elasticsearch.conf:/etc/supervisor/conf.d/elasticsearch.conf
+      - ./docker/config/supervisor/zabbix-agent.conf:/etc/supervisor/conf.d/zabbix-agent.conf
+
+    depends_on:
+      - zabbix-server
+    links:
+      - zabbix-server
