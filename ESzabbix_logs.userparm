@@ -1,2 +1,1 @@
-UserParameter=ESzabbix_logs[*],/opt/elaticsearch-zabbix/ESzabbix_logs.py $1
-UserParameter=ESzabbix_discovery, python /opt/elasticsearch-zabbix/ESzabbix_logs.py elasticsearch.discovery
+UserParameter=ESzabbix_logs[*],python /opt/elasticsearch-zabbix/ESzabbix_logs.py $1
